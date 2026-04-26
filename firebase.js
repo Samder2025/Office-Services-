@@ -4,10 +4,10 @@ import { getFirestore } from "https://www.gstatic.com/firebasejs/10.7.1/firebase
 import { getStorage } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDuIsMuNFL9dhxoSmJpER5Kgtiy7Bgm20g",
-  authDomain: "office-services-95c51.firebaseapp.com",
-  projectId: "office-services-95c51",
-  storageBucket: "office-services-95c51.firebasestorage.app"
+  apiKey: "AIzaSyBxVHD7FnnepFff_VdWFYPnXyTcLoq8IKs",
+  authDomain: "services-150f7.firebaseapp.com",
+  projectId: "services-150f7",
+  storageBucket: "services-150f7.firebasestorage.app"
 };
 
 const app = initializeApp(firebaseConfig);
