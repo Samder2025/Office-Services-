@@ -1,0 +1,18 @@
+<div id="box"></div>
+
+<script type="module">
+import { db } from "./firebase.js";
+import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const id = new URLSearchParams(location.search).get("id");
+
+const d = await getDoc(doc(db,"services",id));
+
+let s = d.data();
+
+box.innerHTML = `
+  <h1>${s.name}</h1>
+  <img src="${s.img}" width="200">
+  <p>${s.full}</p>
+`;
+</script>

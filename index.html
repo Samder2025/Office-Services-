@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>مكتب العزم للتعقيب والخدمات العامة</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+body{
+  margin:0;
+  font-family: Arial;
+  background:#f5f7fa;
+  color:#111;
+}
+
+/* ===== HERO ===== */
+.hero{
+  background:linear-gradient(135deg,#0f172a,#1e293b);
+  color:white;
+  padding:90px 20px;
+  text-align:center;
+  position:relative;
+}
+
+.hero h1{
+  font-size:34px;
+  margin-bottom:10px;
+}
+
+.hero p{
+  opacity:0.8;
+  line-height:1.8;
+}
+
+/* ===== BUTTONS ===== */
+.btn{
+  padding:10px 15px;
+  border:none;
+  border-radius:10px;
+  margin:5px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.green{background:#22c55e;color:white;}
+.dark{background:#334155;color:white;}
+.whatsapp{background:#25D366;color:white;}
+
+/* ===== LAYOUT ===== */
+.container{
+  padding:20px;
+}
+
+/* ===== GRID ===== */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:10px;
+}
+
+/* ===== CARD ===== */
+.card{
+  background:white;
+  padding:15px;
+  border-radius:12px;
+  box-shadow:0 0 10px #00000010;
+  transition:0.3s;
+}
+
+.card:hover{
+  transform:translateY(-5px);
+}
+
+/* ===== SECTION TITLE ===== */
+h2{
+  margin-top:30px;
+}
+
+/* ===== FOOTER ===== */
+footer{
+  background:#111;
+  color:white;
+  text-align:center;
+  padding:20px;
+  margin-top:30px;
+}
+
+/* ===== FLOAT BUTTON ===== */
+.float{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#25D366;
+  color:white;
+  padding:12px 15px;
+  border-radius:50px;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- 🔥 HERO -->
+<section class="hero">
+
+  <h1>مكتب العزم للتعقيب والخدمات العامة</h1>
+
+  <p>
+    ننجز معاملاتك الحكومية في جميع أنحاء المملكة العربية السعودية
+    (الجوازات – المرور – البلدية – التأشيرات – أبشر)
+  </p>
+
+  <a href="services.html">
+    <button class="btn green">عرض الخدمات</button>
+  </a>
+
+  <a href="login.html">
+    <button class="btn dark">لوحة الإدارة</button>
+  </a>
+
+  <a href="https://wa.me/966000000000">
+    <button class="btn whatsapp">واتساب</button>
+  </a>
+
+</section>
+
+<!-- 📦 SERVICES -->
+<div class="container">
+
+  <h2>🔥 خدماتنا</h2>
+  <div id="services" class="grid"></div>
+
+  <h2>📝 آخر المقالات</h2>
+  <div id="posts"></div>
+
+</div>
+
+<!-- 📞 FLOAT WHATSAPP -->
+<a class="float" href="https://wa.me/966000000000">
+💬 واتساب
+</a>
+
+<footer>
+  جميع الحقوق محفوظة © مكتب العزم للتعقيب 2026
+</footer>
+
+<script type="module">
+
+import { db } from "./firebase.js";
+import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+/* ===== الخدمات ===== */
+async function loadServices(){
+
+  const snap = await getDocs(collection(db,"services"));
+
+  let html = "";
+
+  snap.forEach(d=>{
+    let s = d.data();
+
+    html += `
+      <div class="card">
+        <h3>${s.name}</h3>
+        <p>${s.desc}</p>
+        <a href="service.html?id=${d.id}">
+          <button class="btn dark">تفاصيل</button>
+        </a>
+      </div>
+    `;
+  });
+
+  services.innerHTML = html || "لا توجد خدمات حالياً";
+}
+
+/* ===== المقالات ===== */
+async function loadPosts(){
+
+  const snap = await getDocs(collection(db,"posts"));
+
+  let html = "";
+
+  snap.forEach(d=>{
+    let p = d.data();
+
+    html += `
+      <div class="card">
+        <b>${p.title}</b>
+        <p>${p.content.substring(0,120)}...</p>
+      </div>
+    `;
+  });
+
+  posts.innerHTML = html || "لا توجد مقالات حالياً";
+}
+
+loadServices();
+loadPosts();
+
+</script>
+
+</body>
+</html>
